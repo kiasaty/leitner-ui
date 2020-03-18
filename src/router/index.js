@@ -10,6 +10,8 @@ import Register from '@/views/Register'
 import Front  from '@/views/Front'
 import Home   from '@/views/Home'
 
+import Boxes   from '@/views/Boxes'
+
 const routes = [
   {
     path: '*',
@@ -26,7 +28,7 @@ const routes = [
     name: 'Register',
     component: Register,
   },
-  { // start of front routes
+  {
     path: '/',
     component: Front,
     children: [
@@ -35,8 +37,13 @@ const routes = [
         name: 'Home',
         component: Home,
       },
+      {
+        path: '/boxes',
+        name: 'Boxes',
+        component: Boxes,
+      },
     ]
-  }, // end of front routes
+  }
 ]
 
 const router = new VueRouter({

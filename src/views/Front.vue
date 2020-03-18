@@ -10,16 +10,25 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <v-btn 
-          v-if="isLoggedIn"
-          text
-          @click="logout"
-        >Logout</v-btn>
-        <v-btn
-          v-else
-          text
-          :to="{name: 'Login'}"
-        >Login</v-btn>
+
+        <template v-if="isLoggedIn">
+          <v-btn 
+            text
+            :to="{name: 'Boxes'}"
+          >Boxes</v-btn>
+          <v-btn 
+            text
+            @click="logout"
+          >Logout</v-btn>
+        </template>
+
+        <template v-else>
+          <v-btn
+            text
+            :to="{name: 'Login'}"
+          >Login</v-btn>
+        </template>
+
       </v-toolbar-items>
 
       <v-avatar v-if="isLoggedIn" color="teal" size="40" class="ml-4">
@@ -32,7 +41,9 @@
 
     </v-app-bar>
         
-    <router-view/>
+    <v-content>
+      <router-view/>
+    </v-content>
     
   </div>
 </template>
