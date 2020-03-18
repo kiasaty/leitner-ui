@@ -86,7 +86,6 @@ export default {
   computed: {
     ...mapGetters({
       user:       'user/getUser',
-      isPatient:  'user/isPatient',
     })
   },
 
@@ -95,24 +94,9 @@ export default {
           store
               .dispatch('user/login', this.credentials)
               .then( () => {
-
-                if(this.isPatient){
-
                   this.$router.push({
-                    name: 'PatientMedicalRecord',
-                    params: {
-                      patient_id: this.user.id
-                    }
+                    name: 'Home'
                   })
-
-                } else {
-
-                  this.$router.push({
-                    name: 'Dashboard'
-                  })
-
-                }
-
               })
               .catch(error => this.serverErrors = error.response.data.errors.detail)
       }

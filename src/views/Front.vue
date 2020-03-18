@@ -2,32 +2,33 @@
   <div>
 
     <v-app-bar app>
-      <v-toolbar-title style="width: 300px">
-        <span class="hidden-sm-and-down">Leinter</span>
-      </v-toolbar-title>
-      <!-- <v-toolbar-title class="mr-5">JustInTime</v-toolbar-title> -->
 
-      <div class="flex-grow-1"></div>
+      <v-toolbar-title style="width: 300px">
+        <span class="hidden-sm-and-down">Leitner</span>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
 
       <v-toolbar-items>
         <v-btn 
           v-if="isLoggedIn"
           text
-          to="/panel"
-        >Panel</v-btn>
+          @click="logout"
+        >Logout</v-btn>
         <v-btn
           v-else
           text
-          to="/login"
+          :to="{name: 'Login'}"
         >Login</v-btn>
       </v-toolbar-items>
-      <!-- <v-btn v-if="!isLoggedIn" class="mx-3" color="primary" large to="/register">Register</v-btn> -->
 
-      <template v-if="isLoggedIn && $vuetify.breakpoint.smAndUp">
-        <v-btn icon @click="logout">
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-      </template>
+      <v-avatar v-if="isLoggedIn" color="teal" size="40" class="ml-4">
+        <img
+          v-if="user.profile_photo"
+          :src="`${serverURL}/${user.profile_photo}`"
+        >
+        <span v-else class="white--text body-2" v-text="userInitials"></span>
+      </v-avatar>
 
     </v-app-bar>
         
@@ -48,7 +49,10 @@
 
     computed: {
       ...mapGetters({
-        isLoggedIn: 'user/isLoggedIn',
+        isLoggedIn:   'user/isLoggedIn',
+        user:         'user/getUser',
+        userInitials: 'user/getUserInitials',
+        serverURL:    'serverURL',
       }),
     },
 
