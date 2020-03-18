@@ -65,19 +65,24 @@
         </v-toolbar>
       </template>
       <template v-slot:item.action="{ item }">
-        <v-icon
-          small
-          class="mr-2"
+        <v-btn 
+          icon
+          :to="{name: 'Box', params: {id: item.id}}"
+        >
+            <v-icon small>mdi-eye</v-icon>
+        </v-btn>
+        <v-btn 
+          icon
           @click="editItem(item)"
         >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
+            <v-icon small>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn 
+          icon
           @click="deleteItem(item)"
         >
-          mdi-delete
-        </v-icon>
+            <v-icon small>mdi-delete</v-icon>
+        </v-btn>
       </template>
     </v-data-table>
 

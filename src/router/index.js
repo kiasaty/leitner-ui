@@ -10,7 +10,8 @@ import Register from '@/views/Register'
 import Front  from '@/views/Front'
 import Home   from '@/views/Home'
 
-import Boxes   from '@/views/Boxes'
+import Boxes  from '@/views/Boxes'
+import Box    from '@/views/Box'
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
         path: '/boxes',
         name: 'Boxes',
         component: Boxes,
+      },
+      {
+        path: '/boxes/:id',
+        name: 'Box',
+        component: Box,
       },
     ]
   }
