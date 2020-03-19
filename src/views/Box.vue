@@ -39,6 +39,8 @@
               <v-col cols="12" md="6">
                 <v-textarea
                   solo
+                  rows="7"
+                  auto-grow
                   label="Front"
                   counter="250"
                   v-model="dialogFields.front"
@@ -48,6 +50,8 @@
               <v-col cols="12" md="6">
                 <v-textarea
                   solo
+                  rows="7"
+                  auto-grow
                   label="Back"
                   counter="1000"
                   v-model="dialogFields.back"

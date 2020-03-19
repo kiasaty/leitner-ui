@@ -14,13 +14,14 @@
 
         <v-card max-width="500" min-height="400" class="d-flex flex-column ma-auto">
           <v-card-text class="display-1 text-center grow">
-            {{ card.front }}
+            {{ isCardFlipped ? card.back : card.front }}
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn 
               ref="flip"
               icon
+              @click="isCardFlipped = !isCardFlipped"
             >
               <v-icon small>mdi-replay</v-icon>
             </v-btn>
@@ -66,7 +67,7 @@ import store from '@/store'
 
 export default {
   data: () => ({
-    //
+    isCardFlipped: false,
   }),
 
   computed: {
