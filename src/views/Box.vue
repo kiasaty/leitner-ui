@@ -19,6 +19,7 @@
       fixed bottom right
       class="pl-5 pr-3"
       color="primary"
+      :to="{name: 'Session', params: {id: boxID}}"
     >
       Learn
       <v-icon>mdi-chevron-right</v-icon>

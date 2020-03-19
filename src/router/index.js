@@ -10,8 +10,9 @@ import Register from '@/views/Register'
 import Front  from '@/views/Front'
 import Home   from '@/views/Home'
 
-import Boxes  from '@/views/Boxes'
-import Box    from '@/views/Box'
+import Boxes    from '@/views/Boxes'
+import Box      from '@/views/Box'
+import Session  from '@/views/Session'
 
 const routes = [
   {
@@ -49,7 +50,12 @@ const routes = [
         component: Box,
       },
     ]
-  }
+  },
+  {
+    path: '/boxes/:id/session',
+    name: 'Session',
+    component: Session,
+  },
 ]
 
 const router = new VueRouter({
