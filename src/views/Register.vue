@@ -14,7 +14,6 @@
                     ref="firstname"
                     label="First Name"
                     outlined
-                    name="firstname"
                     type="text"
                     v-model="fields.firstname"
                     :error-messages="serverErrors.firstname"
@@ -24,27 +23,24 @@
                     ref="lastname"
                     label="Last Name"
                     outlined
-                    name="lastname"
                     type="text"
                     v-model="fields.lastname"
                     :error-messages="serverErrors.lastname"
-                    @keyup.enter="$refs.phonenumber.focus()"
+                    @keyup.enter="$refs.email.focus()"
                   ></v-text-field>
                   <v-text-field
-                    ref="phonenumber"
-                    label="Phone Number"
+                    ref="email"
+                    label="Email"
                     outlined
-                    name="phone_number"
-                    type="text"
-                    v-model="fields.phone_number"
-                    :error-messages="serverErrors.phone_number"
+                    type="email"
+                    v-model="fields.email"
+                    :error-messages="serverErrors.email"
                     @keyup.enter="$refs.username.focus()"
                   ></v-text-field>
                   <v-text-field
                     ref="username"
                     label="Username"
                     outlined
-                    name="username"
                     type="username"
                     v-model="fields.username"
                     :error-messages="serverErrors.username"
@@ -54,7 +50,6 @@
                     ref="password"
                     label="Password"
                     outlined
-                    name="password"
                     type="password"
                     v-model="fields.password"
                     :error-messages="serverErrors.password"
@@ -64,7 +59,6 @@
                     ref="password_confirmation"
                     label="Confirm Password"
                     outlined
-                    name="password_confirmation"
                     type="password"
                     v-model="fields.password_confirmation"
                     @keyup.enter="register"
@@ -85,7 +79,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import store from '@/store'
 
 export default {
   props: {
@@ -96,7 +90,7 @@ export default {
       fields: {
         firstname: "",
         lastname: "",
-        phone_number: "",
+        email: "",
         username: "",
         password: "",
         password_confirmation: ""
@@ -107,11 +101,12 @@ export default {
 
   methods: {
     register() {
-      axios
-        .post('patients', this.fields)
-        .then( () => this.$router.push('/login') )
-        .catch(
-          error => (this.serverErrors = error.response.data.errors.detail)
+      return store.dispatch('user/register', this.fields)
+        .then( () => 
+          this.$router.push({name: 'Home'})
+        )
+        .catch(error => 
+          this.serverErrors = error.response.data.errors.detail
         );
     }
   }

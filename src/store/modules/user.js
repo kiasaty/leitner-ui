@@ -1,4 +1,4 @@
-// import UserService from '@/services/UserService.js'
+import UserService from '@/services/UserService.js'
 import axios from 'axios'
 
 export const namespaced = true
@@ -20,19 +20,23 @@ export const mutations = {
 }
 
 export const actions = {
-  register({ commit }, credentials) {
-    return axios
-      .post('/register', credentials)
-      .then(({ data }) => {
-          commit('SET_USER_DATA', data)
+  register({ dispatch }, data) {
+    return UserService.create(data)
+      .then( () => {
+        dispatch('login', data)
+      })
+      .catch(error => {
+        throw error
       })
   },
   login({ commit }, credentials) {
-    return axios
-      .post('/login', credentials)
-      .then((response) => {
-          commit('SET_USER_DATA', response.data)
-          return response
+    return UserService.login(credentials)
+      .then( response => {
+        commit('SET_USER_DATA', response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
       })
   },
   logout({ commit }) {
@@ -46,15 +50,6 @@ export const getters = {
   },
   isAdmin(state) {
     return (state.user) && (state.user.role == 'admin')
-  },
-  isDoctor(state) {
-    return (state.user) && (state.user.role == 'doctor')
-  },
-  isSecretary(state) {
-    return (state.user) && (state.user.role == 'secretary')
-  },
-  isPatient(state) {
-    return (state.user) && (state.user.role == 'patient')
   },
   getUser(state) {
     if(state.user) return state.user
