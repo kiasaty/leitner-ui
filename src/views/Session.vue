@@ -17,6 +17,13 @@
             {{ isCardFlipped ? card.back : card.front }}
           </v-card-text>
           <v-card-actions>
+            <v-chip
+              v-if="!card.reviewed_at"
+              color="success"
+              outlined
+            >
+              New
+            </v-chip>
             <v-spacer></v-spacer>
             <v-btn 
               ref="flip"
