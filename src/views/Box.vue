@@ -67,7 +67,8 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn color="blue darken-1" text @click="endTask">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="save">Save & Close</v-btn>
+          <v-btn color="blue darken-1" text @click="save(false)">Save & New</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -184,8 +185,8 @@ export default {
   },
 
   methods: {
-    async getBox() {
-      await store.dispatch('box/fetchBox', this.boxID);
+    getBox() {
+      store.dispatch('box/fetchBox', this.boxID);
     },
 
     getCards() {
@@ -245,19 +246,19 @@ export default {
       this.endTask()
     },
 
-    endTask() {
+    endTask(closeDialogAfter = true) {
       this.resetDialog()
-      this.dialogOpen = false
+      if(closeDialogAfter) this.dialogOpen = false
       this.serverErrors = {}
       store.dispatch('box/unsetIndex')
     },
 
-    save() {
+    save(closeDialogAfter = true) {
       
       let promise = this.isUpdateTask ? this.updateCard() : this.storeCard()
 
       promise.then(() => {
-        this.endTask()
+        this.endTask(closeDialogAfter)
       })
     },
 
