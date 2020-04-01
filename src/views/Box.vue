@@ -25,7 +25,7 @@
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
 
-    <v-dialog v-model="dialogOpen" max-width="800px">
+    <v-dialog v-model="dialogOpen" max-width="80%">
       <v-card>
         <v-card-title>
           <span class="headline">{{ dialogTitle }}</span>
@@ -42,21 +42,15 @@
                   rows="7"
                   auto-grow
                   label="Front"
-                  counter="250"
                   v-model="dialogFields.front"
                   :error-messages="serverErrors.front"
                 ></v-textarea>
               </v-col>
               <v-col cols="12" md="6">
-                <v-textarea
-                  solo
-                  rows="7"
-                  auto-grow
-                  label="Back"
-                  counter="1000"
+                <tiptap-vuetify
                   v-model="dialogFields.back"
-                  :error-messages="serverErrors.back"
-                ></v-textarea>
+                  :extensions="extensions"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -145,8 +139,15 @@
 <script>
 import { mapGetters } from "vuex"
 import store from '@/store'
+import {
+  TiptapVuetify, Heading, Bold, Italic, Strike, Underline,
+  Link, Blockquote, History, HorizontalRule
+} from 'tiptap-vuetify'
 
 export default {
+
+  components: { TiptapVuetify },
+
   data: () => ({
     dialogOpen: false,
     dialogFields: {
@@ -155,6 +156,21 @@ export default {
       back: null,
     },
     serverErrors: {},
+    extensions: [
+      History,
+      Bold,
+      Italic,
+      Underline,
+      Strike,
+      Blockquote,
+      [Heading, {
+        options: {
+          levels: [1, 2, 3]
+        }
+      }],
+      Link,
+      HorizontalRule
+    ],
   }),
 
   computed: {

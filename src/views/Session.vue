@@ -13,8 +13,10 @@
       <v-card-text>
 
         <v-card max-width="500" min-height="400" class="d-flex flex-column ma-auto">
-          <v-card-text class="display-1 text-center grow">
-            {{ isCardFlipped ? card.back : card.front }}
+          <v-card-text
+            class="body-1 text-center grow"
+            v-html="isCardFlipped ? card.back : card.front"
+          >
           </v-card-text>
           <v-card-actions>
             <v-chip

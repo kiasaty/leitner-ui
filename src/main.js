@@ -6,6 +6,13 @@ import vuetify from './plugins/vuetify'
 import axios from 'axios'
 import '@mdi/font/css/materialdesignicons.css'
 
+import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
+import 'tiptap-vuetify/dist/main.css'
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify,
+  iconsGroup: 'mdi'
+})
+
 Vue.config.productionTip = false
 
 window.axios = axios
