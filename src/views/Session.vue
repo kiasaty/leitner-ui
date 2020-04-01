@@ -45,7 +45,7 @@
           color="error"
           outlined
           fab
-          @click="processCard(0)"
+          @click="reviewCard(0)"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -55,7 +55,7 @@
           color="success"
           outlined
           fab
-          @click="processCard(1)"
+          @click="reviewCard(1)"
         >
           <v-icon>mdi-check</v-icon>
         </v-btn>
@@ -94,8 +94,8 @@ export default {
     getNextCard() {
       store.dispatch('session/next', this.boxID)
     },
-    processCard(remember) {
-      store.dispatch('session/process', {
+    reviewCard(remember) {
+      store.dispatch('session/review', {
         boxID:    this.boxID,
         remember: remember
       })

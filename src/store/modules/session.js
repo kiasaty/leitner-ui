@@ -31,8 +31,8 @@ export const actions = {
         throw error
       })
   },
-  process({ state }, { boxID, remember }) {
-    return SessionService.process(boxID, state.card.id, remember)
+  review({ state }, { boxID, remember }) {
+    return SessionService.review(boxID, state.card.id, remember)
       .then(
         //
       )

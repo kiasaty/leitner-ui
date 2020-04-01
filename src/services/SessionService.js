@@ -10,8 +10,8 @@ export default {
     return axios.get(`session/next?box_id=${boxID}`)
   },
   
-  process(boxID, cardID, remember) {
-    return axios.get(`session/process?box_id=${boxID}&card_id=${cardID}&remember=${remember}`)
+  review(boxID, cardID, remember) {
+    return axios.get(`session/review?box_id=${boxID}&card_id=${cardID}&remember=${remember}`)
   },
 
 }
