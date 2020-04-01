@@ -105,6 +105,11 @@ export default {
           this.getNextCard()
         )
     },
+  }, 
+  watch: {
+    card() {
+      this.isCardFlipped = false
+    }
   }
 };
 </script>
