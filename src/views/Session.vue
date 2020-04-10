@@ -4,6 +4,9 @@
     <v-card class="d-flex flex-column h-100 w-100">
 
       <v-toolbar flat dense>
+        <v-btn icon @click="getPreviousCard" v-if="isPreviousCardReviewable">
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
         <v-spacer></v-spacer>
         <v-btn icon :to="{name: 'Box', params: {id: boxID}}">
           <v-icon>mdi-close</v-icon>
@@ -85,6 +88,7 @@ export default {
     },
     ...mapGetters({
       card: 'session/getCard',
+      isPreviousCardReviewable: 'session/isPreviousCardReviewable'
     })
   },
 
@@ -101,9 +105,9 @@ export default {
         boxID:    this.boxID,
         remember: remember
       })
-        .then(
-          this.getNextCard()
-        )
+    },
+    getPreviousCard() {
+      store.dispatch('session/previous')
     },
   }, 
   watch: {
