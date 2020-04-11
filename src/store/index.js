@@ -18,6 +18,7 @@ export default new Vuex.Store({
 
   state: {
     serverURL: 'http://localhost:8000',
+    perPage:    20,
   },
 
   mutations: {

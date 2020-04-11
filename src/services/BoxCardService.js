@@ -2,11 +2,15 @@ import axios from 'axios'
 
 export default {
 
-  fetchAll(boxID, page, searchQuery) {
+  fetchAll(boxID, page, perPage, searchQuery) {
     let url = `boxes/${boxID}/cards`
 
     if (page) {
       url += `?page=${page}`
+    }
+
+    if (page) {
+      url += `&per_page=${perPage}`
     }
 
     if (searchQuery) {
