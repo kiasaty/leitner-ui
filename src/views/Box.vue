@@ -68,7 +68,7 @@
     </v-dialog>
 
 
-    <v-card>
+    <v-card outlined>
       <v-tabs
       >
         <v-tab>Cards</v-tab>
@@ -101,6 +101,18 @@
                 </v-card>
               </v-col>
             </v-row>
+
+            <div class="text-center mt-10">
+              <v-pagination
+                v-if="pageCount > 1"
+                :value="currentPage"
+                :length="pageCount"
+                total-visible="10"
+                circle
+                @input="$router.push({name: 'Box', params: {boxID: boxID}, query: {page: $event}})"
+              ></v-pagination>
+            </div>
+            
           </v-container>
         </v-tab-item>
 
@@ -183,16 +195,15 @@ export default {
     dialogTitle() {
       return this.isUpdateTask ? "Update Card" : "Create Card";
     },
+    page() {
+      return this.$route.query.page || 1
+    },
     ...mapGetters({
-      box:    'box/getBox',
-      cards:  'card/getCards',
+      box:          'box/getBox',
+      cards:        'card/getCards',
+      currentPage:  'card/getCurrentPage',
+      pageCount:    'card/getPageCount',
     })
-  },
-
-  watch: {
-    dialogOpen(val) {
-      val || this.endTask()  // if openDialog got false (it is being closed), run the endTask method
-    }
   },
 
   created() {
@@ -206,7 +217,10 @@ export default {
     },
 
     getCards() {
-      store.dispatch('card/fetchCards', {boxID: this.boxID})
+      store.dispatch('card/fetchCards', {
+        boxID:  this.boxID,
+        page:   this.page
+      })
     },
 
     storeCard() {
@@ -289,6 +303,15 @@ export default {
       this.dialogFields.front = null
       this.dialogFields.back  = null
     },
-  }
+  },  
+
+  watch: {
+    page(val) {
+      val && this.getCards()
+    },
+    dialogOpen(val) {
+      val || this.endTask()  // if openDialog got false (it is being closed), run the endTask method
+    },
+  },
 };
 </script>

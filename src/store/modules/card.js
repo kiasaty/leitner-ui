@@ -6,7 +6,8 @@ export const state = {
   cards: [],
   card: {},
   index: null,
-  perPage: 3
+  pageCount: null,
+  currentPage: null
 }
 
 export const mutations = {
@@ -31,6 +32,12 @@ export const mutations = {
   DELETE_CARD(state) {
     state.cards.splice(state.index, 1)
   },
+  SET_PAGE_COUNT(state, pageCount) {
+    state.pageCount = pageCount
+  },
+  SET_CURRENT_PAGE(state, currentPage) {
+    state.currentPage = currentPage
+  },
 }
 
 export const actions = {
@@ -40,11 +47,13 @@ export const actions = {
   unsetIndex({ commit }) {
     commit('UNSET_INDEX')
   },
-  fetchCards({ commit }, { boxID, searchQuery }) {
+  fetchCards({ commit }, { boxID, page, searchQuery }) {
 
-    return BoxCardService.fetchAll(boxID, searchQuery)
+    return BoxCardService.fetchAll(boxID, page, searchQuery)
       .then(response => {
         commit('SET_CARDS', response.data.data)
+        commit('SET_PAGE_COUNT', response.data.meta.last_page)
+        commit('SET_CURRENT_PAGE', response.data.meta.current_page)
       })
       .catch(error => {
         throw error
@@ -108,6 +117,12 @@ export const getters = {
   },
   getIndex: state => {
     return state.index
+  },
+  getPageCount: state => {
+    return state.pageCount
+  },
+  getCurrentPage: state => {
+    return state.currentPage
   },
   getCardByID: state => id => {
     return state.cards.find(card => card.id == id)
