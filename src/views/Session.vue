@@ -124,6 +124,12 @@ export default {
   methods: {
     getNextCard() {
       store.dispatch('session/next', this.boxID)
+      .catch(
+        this.startNextSession()
+      )
+    },
+    startNextSession() {
+      store.dispatch('session/start', this.boxID)
     },
     reviewCard(remember) {
       store.dispatch('session/review', {

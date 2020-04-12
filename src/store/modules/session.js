@@ -19,11 +19,13 @@ export const mutations = {
 }
 
 export const actions = {
-  start(boxID) {
+  start({ commit }, boxID) {
     return SessionService.start(boxID)
-      .then(
-        //
-      )
+      .then(response => {
+        if (response.data) {
+          commit('SET_CARD', response.data.data)
+        }
+      })
       .catch(error => {
         throw error
       })
