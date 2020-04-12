@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
 
-    <v-card class="d-flex flex-column h-100 w-100">
+    <v-card outlined class="d-flex flex-column h-100 w-100">
 
       <v-toolbar flat dense>
         <v-btn icon @click="getPreviousCard" v-if="isPreviousCardReviewable">
@@ -22,10 +22,25 @@
           >
           </v-card-text>
           <v-card-actions>
+            <v-tooltip left>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  v-on="on"
+                >
+                  <v-icon small>mdi-information-outline</v-icon>
+                </v-btn>
+              </template>
+              <span class="d-block">Level: {{ card.level }}</span>
+              <span class="d-block">Deck: {{ card.deck }}</span>
+              <span class="d-block" v-if="card.reviewed_at">Last review: {{ lastReview }}</span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
             <v-chip
               v-if="!card.reviewed_at"
               color="success"
               outlined
+              small
             >
               New
             </v-chip>
@@ -85,6 +100,16 @@ export default {
   computed: {
     boxID() {
       return this.$route.params.id
+    },
+    lastReview() {
+      if (!this.card.reviewed_at) return null
+
+      let date = new Date(this.card.reviewed_at);
+
+      let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      
+      return `${months[date.getMonth()]} ${date.getDate()}`
     },
     ...mapGetters({
       card: 'session/getCard',
