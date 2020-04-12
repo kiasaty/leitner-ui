@@ -67,17 +67,20 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
 
-  // redirect to login page if user is not logged in and trying to access a restricted page
-  const authRequired = to.matched[0].path == '/panel'
-  if (!loggedIn && authRequired) {
-    return next('/login')
-  }
+  console.log(to);
 
   // some pages should only be shown to guests
-  const guestPages = ['/login', '/register']
-  const onlyGuestAllowed = guestPages.indexOf(to.matched[0].path) !== -1
-  if (loggedIn && onlyGuestAllowed) {
-    return next('/panel')
+  const guestPages = ['Login', 'Register']
+  const onlyGuestsAllowed = guestPages.indexOf(to.name) !== -1
+  if (loggedIn && onlyGuestsAllowed) {
+    return next({ name: 'Home' })
+  }
+
+  // redirect to login page if user is not logged in and trying to access a restricted page
+  const publicPages = ['Home', ...guestPages]
+  const authRequired = publicPages.indexOf(to.name) === -1
+  if (!loggedIn && authRequired) {
+    return next({ name: 'Login' })
   }
 
   next()
