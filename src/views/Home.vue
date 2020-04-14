@@ -2,7 +2,6 @@
   <section>
 
     <v-parallax
-      v-if="!isLoggedIn"
       dark
       src="../assets/vbanner.webp"
     >
@@ -10,9 +9,13 @@
         align="center"
         justify="center"
       >
-        <v-col class="text-center" cols="12">
+        <v-col class="text-center" cols="12" v-if="!isLoggedIn">
           <h1 class="display-1 font-weight-thin mb-4">Wanna memorize things effectively?!</h1>
           <v-btn to="/register" large class="ml-5 mt-2">Get Started</v-btn>
+        </v-col>
+        <v-col class="text-center" cols="12" v-else>
+          <h1 class="display-1 font-weight-thin mb-4">Welcome {{ user.fullname }}!</h1>
+          <v-btn to="/boxes" large class="ml-5 mt-2">Create Box</v-btn>
         </v-col>
       </v-row>
     </v-parallax>
@@ -33,6 +36,7 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/isLoggedIn',
+      user:       'user/getUser',
     }),
   },
 };
