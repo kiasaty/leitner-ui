@@ -4,18 +4,6 @@
     <v-btn
       dark
       fab rounded
-      fixed bottom left
-      class="pl-3 pr-5"
-      color="primary"
-      @click="dialogOpen = true"
-    >
-      <v-icon>mdi-plus</v-icon>
-      Add Card
-    </v-btn>
-
-    <v-btn
-      dark
-      fab rounded
       fixed bottom right
       class="pl-5 pr-3"
       color="primary"
@@ -59,8 +47,8 @@
         <v-divider></v-divider>
 
         <v-card-actions>
-          <div class="flex-grow-1"></div>
           <v-btn color="blue darken-1" text @click="endTask">Cancel</v-btn>
+          <v-spacer />
           <v-btn color="blue darken-1" text @click="save">Save & Close</v-btn>
           <v-btn color="blue darken-1" text @click="save(false)">Save & New</v-btn>
         </v-card-actions>
@@ -76,6 +64,32 @@
 
         <v-tab-item>
           <v-container fluid>
+            <v-row>
+              <v-col cols="12" sm="2">
+                <v-btn
+                  large
+                  color="primary"
+                  @click="dialogOpen = true"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                  Add Card
+                </v-btn>
+              </v-col>
+              <v-spacer />
+              <v-col cols="12" md="5">
+                <v-text-field
+                  v-model.trim="searchQuery"
+                  type="search"
+                  placeholder="Search"
+                  outlined
+                  rounded
+                  single-line
+                  append-icon="mdi-magnify"
+                  @click:append="getCards"
+                  @keydown.enter="getCards"
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12" md="3" v-for="card in cards" :key="card.id">
                 <v-card>
@@ -167,6 +181,7 @@ export default {
       front: null,
       back: null,
     },
+    searchQuery: null,
     serverErrors: {},
     extensions: [
       History,
@@ -219,7 +234,8 @@ export default {
     getCards() {
       store.dispatch('card/fetchCards', {
         boxID:  this.boxID,
-        page:   this.page
+        page:   this.page, 
+        searchQuery: this.searchQuery
       })
     },
 
@@ -310,7 +326,7 @@ export default {
       val && this.getCards()
     },
     dialogOpen(val) {
-      val || this.endTask()  // if openDialog got false (it is being closed), run the endTask method
+      val || this.endTask()  // if dialogOpen got false (it is being closed), run the endTask method
     },
   },
 };
