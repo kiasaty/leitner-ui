@@ -29,7 +29,7 @@
                   solo
                   rows="7"
                   auto-grow
-                  label="Front"
+                  placeholder="Front of the card"
                   v-model="dialogFields.front"
                   :error-messages="serverErrors.front"
                 ></v-textarea>
@@ -38,6 +38,8 @@
                 <tiptap-vuetify
                   v-model="dialogFields.back"
                   :extensions="extensions"
+                  placeholder="Back of the card"
+                  min-height="140"
                 />
               </v-col>
             </v-row>
@@ -92,10 +94,11 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="3" v-for="card in cards" :key="card.id">
-                <v-card>
+                <v-card min-height="200" class="d-flex flex-column">
                   <v-card-title>
                     {{ card.front }}
                   </v-card-title>
+                  <v-spacer></v-spacer>
                   <v-card-actions>
                     <v-spacer />
                     <v-btn 

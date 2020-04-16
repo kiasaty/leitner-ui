@@ -8,7 +8,7 @@
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn icon :to="{name: 'Box', params: {id: boxID}}">
+        <v-btn exact icon :to="{name: 'Box', params: {id: boxID}}">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
