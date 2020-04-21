@@ -14,7 +14,7 @@
     </v-btn>
 
     <v-dialog v-model="dialogOpen" max-width="80%">
-      <v-card>
+      <v-card :loading="loading">
         <v-card-title>
           <span class="headline">{{ dialogTitle }}</span>
         </v-card-title>
@@ -178,6 +178,7 @@ export default {
   components: { TiptapVuetify },
 
   data: () => ({
+    loading: false,
     dialogOpen: false,
     dialogFields: {
       id: null,
@@ -237,20 +238,23 @@ export default {
     getCards() {
       store.dispatch('card/fetchCards', {
         boxID:  this.boxID,
-        page:   this.page, 
-        searchQuery: this.searchQuery
+        params: {
+          page: this.page, 
+          q:    this.searchQuery
+        }
       })
     },
 
     storeCard() {
+      this.loading = true 
       return store.dispatch('card/createCard', {
         boxID:    this.boxID,
         formData: this.getFormData()
       })
-        .catch(error => {
-          this.serverErrors = error.response.data.errors.detail
-          throw error
-        });
+      .catch(error => {
+        this.serverErrors = error.response.data.errors.detail
+        throw error
+      })
     },
 
     updateCard() {
@@ -299,6 +303,7 @@ export default {
       this.resetDialog()
       if(closeDialogAfter) this.dialogOpen = false
       this.serverErrors = {}
+      this.loading = false
       store.dispatch('box/unsetIndex')
     },
 

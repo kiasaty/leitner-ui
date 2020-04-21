@@ -47,9 +47,11 @@ export const actions = {
   unsetIndex({ commit }) {
     commit('UNSET_INDEX')
   },
-  fetchCards({ commit, rootState }, { boxID, page, perPage = rootState.perPage, searchQuery }) {
+  fetchCards({ commit, rootState }, { boxID, params }) {
 
-    return BoxCardService.fetchAll(boxID, page, perPage, searchQuery)
+    params.perPage = params.perPage || rootState.perPage
+
+    return BoxCardService.fetchAll(boxID, params)
       .then(response => {
         commit('SET_CARDS', response.data.data)
         commit('SET_PAGE_COUNT', response.data.meta.last_page)
