@@ -32,9 +32,19 @@ new Vue({
       this.$store.commit('user/SET_USER_DATA', userData)
     }
 
+    axios.interceptors.request.use(config => {
+      this.$store.dispatch('server/incrementSentRequestCount')
+      return config
+    })
+
     axios.interceptors.response.use(
-      response => response,
+      response => {
+        this.$store.dispatch('server/decrementSentRequestCount')
+        return response
+      },
       error => {
+        this.$store.dispatch('server/decrementSentRequestCount')
+
         if (error.response.status === 401) {
           this.$store.dispatch('user/logout')
         }

@@ -14,7 +14,7 @@
             sm="8"
             md="4"
           >
-            <v-card outlined class="pa-6">
+            <v-card outlined class="pa-6 pt-0" :loading="isLoading">
               <v-toolbar
                 color="white"
                 flat
@@ -68,42 +68,41 @@
 
 <script>
 import store from '@/store'
-import { mapGetters } from "vuex"
 
 export default {
   props: {
     source: String,
   },
+
   data () {
-      return {
-          recieved_data: Object,
-          credentials: {
-              username: '',
-              password: ''   
-          },
-          serverErrors: {},
-      }
+    return {
+      recieved_data: Object,
+      credentials: {
+          username: '',
+          password: ''   
+      },
+      serverErrors: {},
+    }
   },
 
   computed: {
-    ...mapGetters({
-      user:       'user/getUser',
-    })
+    isLoading() {
+      return store.getters['server/isLoading']
+    }
   },
 
   methods: {
-      login() {    
-          store
-              .dispatch('user/login', this.credentials)
-              .then( () => {
-                  this.$router.push({
-                    name: 'Home'
-                  })
-              })
-              .catch(error => 
-                this.serverErrors = error.response.data.errors.detail
-              )
-      }
+    login() {    
+      store.dispatch('user/login', this.credentials)
+        .then( () => {
+            this.$router.push({
+              name: 'Home'
+            })
+        })
+        .catch(error => 
+          this.serverErrors = error.response.data.errors.detail
+        )
+    }
   }
 }
 </script>

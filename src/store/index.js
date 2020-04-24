@@ -4,6 +4,7 @@ import * as user from '@/store/modules/user.js'
 import * as box from '@/store/modules/box.js'
 import * as card from '@/store/modules/card.js'
 import * as session from '@/store/modules/session.js'
+import * as server from '@/store/modules/server.js'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     user,
     box,
     card,
-    session
+    session,
+    server
   },
 
   state: {

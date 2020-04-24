@@ -4,7 +4,7 @@
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
-            <v-card outlined class="pa-6">
+            <v-card outlined class="pa-6 pt-0" :loading="isLoading">
               <v-toolbar color="white" flat>
                 <v-toolbar-title class="ma-auto">Register</v-toolbar-title>
               </v-toolbar>
@@ -85,6 +85,7 @@ export default {
   props: {
     source: String
   },
+
   data() {
     return {
       fields: {
@@ -99,9 +100,15 @@ export default {
     };
   },
 
+  computed: {
+    isLoading() {
+      return store.getters['server/isLoading']
+    }
+  },
+
   methods: {
     register() {
-      return store.dispatch('user/register', this.fields)
+      store.dispatch('user/register', this.fields)
         .then( () => 
           this.$router.push({name: 'Home'})
         )
