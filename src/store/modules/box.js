@@ -39,8 +39,8 @@ export const actions = {
   unsetIndex({ commit }) {
     commit('UNSET_INDEX')
   },
-  fetchBoxes({ commit, rootState }, args = {}) {
-    return UserBoxService.fetchAll(rootState.user.user.id, args)
+  fetchBoxes({ commit, rootState }) {
+    return UserBoxService.fetchAll(rootState.user.user.id)
       .then(response => {
         commit('SET_BOXES', response.data.data)
       })

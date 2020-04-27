@@ -2,14 +2,10 @@ import axios from 'axios'
 
 export default {
 
-  fetchAll(args) {
+  fetchAll(params = {}) {
     let url = 'users'
 
-    if (args.searchQuery) {
-      url += `?q=${args.searchQuery}`
-    }
-
-    return axios.get(url)
+    return axios.get(url, { params })
   },
 
   fetch(userID) {

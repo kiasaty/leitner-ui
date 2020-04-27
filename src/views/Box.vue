@@ -238,8 +238,10 @@ export default {
     getCards() {
       store.dispatch('card/fetchCards', {
         boxID:  this.boxID,
-        page:   this.page, 
-        searchQuery: this.searchQuery
+        params: {
+          page: this.page, 
+          q:    this.searchQuery
+        }
       })
     },
 
@@ -248,10 +250,10 @@ export default {
         boxID:    this.boxID,
         formData: this.getFormData()
       })
-        .catch(error => {
-          this.serverErrors = error.response.data.errors.detail
-          throw error
-        });
+      .catch(error => {
+        this.serverErrors = error.response.data.errors.detail
+        throw error
+      })
     },
 
     updateCard() {
