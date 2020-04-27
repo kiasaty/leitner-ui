@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
 
-    <v-card outlined class="d-flex flex-column h-100 w-100">
+    <v-card outlined class="d-flex flex-column h-100 w-100" :loading="isLoading">
 
       <v-toolbar flat dense>
         <v-btn icon @click="getPreviousCard" v-if="isPreviousCardReviewable">
@@ -113,7 +113,8 @@ export default {
     },
     ...mapGetters({
       card: 'session/getCard',
-      isPreviousCardReviewable: 'session/isPreviousCardReviewable'
+      isLoading:  'server/isLoading',
+      isPreviousCardReviewable: 'session/isPreviousCardReviewable',
     })
   },
 

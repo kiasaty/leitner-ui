@@ -2,7 +2,7 @@
   <v-container>
 
     <v-dialog v-model="dialogOpen" max-width="500px">
-      <v-card>
+      <v-card :loading="isLoading">
         <v-card-title>
           <span class="headline">{{ dialogTitle }}</span>
         </v-card-title>
@@ -45,6 +45,7 @@
       :headers="headers"
       :items="boxes"
       class="elevation-1"
+      :loading="!dialogOpen && isLoading"
     >
       <template v-slot:top>
         <v-toolbar flat short>
@@ -118,10 +119,11 @@ export default {
       return this.isUpdateTask ? "Update Box" : "Create Box";
     },
     ...mapGetters({
-      boxes:    'box/getBoxes',
-      box:      'box/getBox',
-      boxIndex: 'box/getIndex',
-      isAdmin:  'user/isAdmin',
+      boxes:      'box/getBoxes',
+      box:        'box/getBox',
+      boxIndex:   'box/getIndex',
+      isAdmin:    'user/isAdmin',
+      isLoading:  'server/isLoading',
     })
   },
 

@@ -14,7 +14,7 @@
     </v-btn>
 
     <v-dialog v-model="dialogOpen" max-width="80%">
-      <v-card>
+      <v-card :loading="isLoading">
         <v-card-title>
           <span class="headline">{{ dialogTitle }}</span>
         </v-card-title>
@@ -58,7 +58,7 @@
     </v-dialog>
 
 
-    <v-card outlined>
+    <v-card outlined :loading="!dialogOpen && isLoading">
       <v-tabs
       >
         <v-tab>Cards</v-tab>
@@ -221,6 +221,7 @@ export default {
       cards:        'card/getCards',
       currentPage:  'card/getCurrentPage',
       pageCount:    'card/getPageCount',
+      isLoading:    'server/isLoading',
     })
   },
 
