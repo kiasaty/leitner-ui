@@ -3,15 +3,15 @@ import axios from 'axios'
 export default {
 
   start(boxID) {
-    return axios.get(`session/start?box_id=${boxID}`)
+    return axios.post(`boxes/${boxID}/session/start`)
   },
 
   next(boxID) {
-    return axios.get(`session/next?box_id=${boxID}`)
+    return axios.get(`boxes/${boxID}/session/cards/next`)
   },
   
   review(boxID, cardID, remember) {
-    return axios.get(`session/review?box_id=${boxID}&card_id=${cardID}&remember=${remember}`)
+    return axios.post(`boxes/${boxID}/session/cards/${cardID}/review`, { remember: remember })
   },
 
 }
