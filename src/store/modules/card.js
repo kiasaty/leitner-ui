@@ -49,7 +49,7 @@ export const actions = {
   },
   fetchCards({ commit, rootState }, { boxID, params }) {
 
-    params.perPage = params.perPage || rootState.perPage
+    params.per_page = params.per_page || rootState.perPage
 
     return BoxCardService.fetchAll(boxID, params)
       .then(response => {

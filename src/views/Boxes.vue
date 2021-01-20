@@ -33,7 +33,7 @@
         <v-divider></v-divider>
 
         <v-card-actions>
-          <div class="flex-grow-1"></div>
+          <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="endTask">Cancel</v-btn>
           <v-btn color="blue darken-1" text @click="save">Save</v-btn>
         </v-card-actions>
