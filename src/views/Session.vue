@@ -37,7 +37,7 @@
             </v-tooltip>
             <v-spacer></v-spacer>
             <v-chip
-              v-if="!card.reviewed_at"
+              v-if="isCardNew"
               color="success"
               outlined
               small
@@ -60,7 +60,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          ref="success"
+          v-if="!isCardNew"
+          ref="failure"
           class="ma-2"
           color="error"
           outlined
@@ -70,7 +71,7 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-btn
-          ref="failure"
+          ref="success"
           class="ma-2"
           color="success"
           outlined
@@ -100,6 +101,9 @@ export default {
   computed: {
     boxID() {
       return this.$route.params.id
+    },
+    isCardNew() {
+      return !this.card.reviewed_at
     },
     lastReview() {
       if (!this.card.reviewed_at) return null
